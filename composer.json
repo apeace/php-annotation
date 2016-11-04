@@ -2,7 +2,7 @@
   "name": "apeace/annotation",
   "type": "library",
   "description": "A library for annotations",
-  "homepage": "https://github.com/apeace/php-annotate",
+  "homepage": "https://github.com/apeace/php-annotation",
   "keywords": ["annotate", "annotations", "parser"],
   "license": "Public Domain",
   "minimum-stability": "stable",
