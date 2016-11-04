@@ -1,5 +1,5 @@
 {
-  "name": "apeace/annotate",
+  "name": "apeace/annotation",
   "type": "library",
   "description": "A library for annotations",
   "homepage": "https://github.com/apeace/php-annotate",
@@ -13,6 +13,6 @@
     "phpunit/phpunit": "^5.6"
   },
   "autoload": {
-    "psr-4": { "Annotate\\": "lib/Annotate" }
+    "psr-4": { "Annotation\\": "lib/Annotation" }
   }
 }
