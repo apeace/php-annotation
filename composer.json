@@ -11,5 +11,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^5.6"
+  },
+  "autoload": {
+    "psr-4": { "Annotate\\": "lib/Annotate" }
   }
 }
