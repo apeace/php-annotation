@@ -10,7 +10,7 @@ class ParserTest extends TestCase {
  * This is an example doc comment.
  *
  * @annotationPlain
- * @annotationString string string string
+ * @annotationArgsPositionalNoParens string string string
  * @annotationArgsEmpty()
  * @annotationArgsPositional(1, 'string', true)
  * @annotationArgsNamed(mynum=1, mystr='string', mybool=true)
@@ -24,7 +24,7 @@ DOCCOMMENT;
         $strings = Parser::extractAnnotationStrings(self::COMMENT);
         $expected = [
             '@annotationPlain',
-            '@annotationString string string string',
+            '@annotationArgsPositionalNoParens string string string',
             '@annotationArgsEmpty()',
             '@annotationArgsPositional(1, \'string\', true)',
             '@annotationArgsNamed(mynum=1, mystr=\'string\', mybool=true)'
