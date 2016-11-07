@@ -27,12 +27,36 @@ class Parser {
     }
 
     public static function parseAnnotationLine($line) {
+        // extract annotation name. it is simply any characters
+        // following the @, up to the first whitespace or open paren.
         $matches = null;
-        preg_match('/@(\S+)/', $line, $matches);
+        preg_match('/^@([^\s(]+)/', $line, $matches);
         if (!$matches) {
-            throw new Exception('Does not match expected pattern');
+            throw new Exception(sprintf('Could not match annotation name: `%s`', $line));
         }
-        return new Annotation($line, $matches[1], []);
+        $name = $matches[1];
+
+        // parse the rest of the line as args
+        $args = self::parseArgs(substr($line, strlen($name)+1));
+
+        return new Annotation($line, $name, $args);
+    }
+
+    public static function parseArgs($argString) {
+        $argString = trim($argString);
+
+        // empty args
+        if (strlen($argString) == 0) {
+            return [];
+        }
+
+        // no parens makes it simple args separated by whitespace
+        if ($argString[0] !== '(') {
+            return preg_split('/\s+/', $argString);
+        }
+
+        // TODO
+        return [];
     }
 
 }

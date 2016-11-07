@@ -19,7 +19,6 @@ class ParserTest extends TestCase {
  */
 DOCCOMMENT;
 
-
     public function test_extract_annotation_lines() {
         $strings = Parser::extractAnnotationLines(self::COMMENT);
         $expected = [
@@ -35,6 +34,16 @@ DOCCOMMENT;
     public function test_parse_annotation_line() {
         $line = '@annotationPlain';
         $expected = new \Annotation\Annotation($line, 'annotationPlain', []);
+        $annotation = Parser::parseAnnotationLine($line);
+        $this->assertEquals($expected, $annotation, '');
+
+        $line = '@annotationPlain string string string';
+        $expected = new \Annotation\Annotation($line, 'annotationPlain', ['string', 'string', 'string']);
+        $annotation = Parser::parseAnnotationLine($line);
+        $this->assertEquals($expected, $annotation, '');
+
+        $line = '@annotationArgsEmpty()';
+        $expected = new \Annotation\Annotation($line, 'annotationArgsEmpty', []);
         $annotation = Parser::parseAnnotationLine($line);
         $this->assertEquals($expected, $annotation, '');
     }
