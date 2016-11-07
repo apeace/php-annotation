@@ -17,9 +17,9 @@ class Parser {
             $matches = null;
             // match comment lines that begin with @, and remove
             // the leading spaces and asterisks
-            preg_match('/^\s*\**\s*(@.*)/', $line, $matches);
+            preg_match('/^(\s|\*)*(@.*)/', $line, $matches);
             if ($matches) {
-                $annotationStrings[] = $matches[1];
+                $annotationStrings[] = $matches[2];
             }
         }
 
