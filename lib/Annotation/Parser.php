@@ -26,6 +26,11 @@ class Parser {
         return $annotationStrings;
     }
 
+    /**
+     * @param string $line
+     * @return Annotation
+     * @throws Exception
+     */
     public static function parseAnnotationLine($line) {
         // extract annotation name. it is simply any characters
         // following the @, up to the first whitespace or open paren.
@@ -42,6 +47,11 @@ class Parser {
         return new Annotation($line, $name, $args);
     }
 
+    /**
+     * @param string $argString
+     * @return array
+     * @throws Exception
+     */
     public static function parseArgs($argString) {
         $argString = trim($argString);
 

@@ -10,7 +10,7 @@ class ParserTest extends TestCase {
  * This is an example doc comment.
  *
  * @annotationPlain
- * @annotationArgsPositionalNoParens string string string
+ * @annotationArgsStringNoParens string string string
  * @annotationArgsEmpty()
  * @annotationArgsPositional(1, 'string', true)
  * @annotationArgsNamed(mynum=1, mystr='string', mybool=true)
@@ -23,7 +23,7 @@ DOCCOMMENT;
         $strings = Parser::extractAnnotationLines(self::COMMENT);
         $expected = [
             '@annotationPlain',
-            '@annotationArgsPositionalNoParens string string string',
+            '@annotationArgsStringNoParens string string string',
             '@annotationArgsEmpty()',
             '@annotationArgsPositional(1, \'string\', true)',
             '@annotationArgsNamed(mynum=1, mystr=\'string\', mybool=true)'
@@ -37,8 +37,8 @@ DOCCOMMENT;
         $annotation = Parser::parseAnnotationLine($line);
         $this->assertEquals($expected, $annotation, '');
 
-        $line = '@annotationPlain string string string';
-        $expected = new \Annotation\Annotation($line, 'annotationPlain', ['string', 'string', 'string']);
+        $line = '@annotationStringNoParens string string string';
+        $expected = new \Annotation\Annotation($line, 'annotationStringNoParens', ['string', 'string', 'string']);
         $annotation = Parser::parseAnnotationLine($line);
         $this->assertEquals($expected, $annotation, '');
 
@@ -46,6 +46,35 @@ DOCCOMMENT;
         $expected = new \Annotation\Annotation($line, 'annotationArgsEmpty', []);
         $annotation = Parser::parseAnnotationLine($line);
         $this->assertEquals($expected, $annotation, '');
+
+        /*
+        $line = '@annotationArgsPositional(1, \'string\', true)';
+        $expected = new \Annotation\Annotation($line, 'annotationArgsPositional', [1, 'string', true]);
+        $annotation = Parser::parseAnnotationLine($line);
+        $this->assertEquals($expected, $annotation, '');
+        */
+    }
+
+    public function test_parse_args() {
+        $args = 'string string string';
+        $expected = ['string', 'string', 'string'];
+        $arr = Parser::parseArgs($args);
+        $this->assertEquals($expected, $arr, '');
+
+        $args = '    string string string      ';
+        $expected = ['string', 'string', 'string'];
+        $arr = Parser::parseArgs($args);
+        $this->assertEquals($expected, $arr, '');
+
+        $args = '()';
+        $expected = [];
+        $arr = Parser::parseArgs($args);
+        $this->assertEquals($expected, $arr, '');
+
+        $args = '(1, \'string\', true)';
+        $expected = [1, 'string', true];
+        $arr = Parser::parseArgs($args);
+        $this->assertEquals($expected, $arr, '');
     }
 
 }
