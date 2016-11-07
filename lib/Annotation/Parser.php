@@ -6,16 +6,9 @@ class Parser {
 
     /**
      * @param string $comment
-     */
-    public static function parse($comment) {
-        print_r(self::extractAnnotationStrings($comment));
-    }
-
-    /**
-     * @param string $comment
      * @return string[]
      */
-    public static function extractAnnotationStrings($comment) {
+    public static function extractAnnotationLines($comment) {
         // split comment into lines using os-agnostic newline regex
         $lines = preg_split('/\R/', $comment);
 
@@ -31,6 +24,15 @@ class Parser {
         }
 
         return $annotationStrings;
+    }
+
+    public static function parseAnnotationLine($line) {
+        $matches = null;
+        preg_match('/@(\S+)/', $line, $matches);
+        if (!$matches) {
+            throw new Exception('Does not match expected pattern');
+        }
+        return new Annotation($line, $matches[1], []);
     }
 
 }
